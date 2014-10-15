@@ -39,9 +39,9 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_mongodb_engine',
     'djangotoolbox',
-    'story',
+    'rest_framework',
+    'api',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -63,9 +63,12 @@ WSGI_APPLICATION = 'SelfiLock.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django_mongodb_engine',
-        'NAME' : 'mongoData',
-        #'NAME': os.path.join(BASE_DIR, 'mongoData'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': 'tmp.db',
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',
+        'PORT': '',
     }
 }
 
