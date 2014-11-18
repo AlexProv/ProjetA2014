@@ -1,0 +1,17 @@
+curl http://104.131.44.82:8000/signup/ -d '{"query":"signup","image": "aaa", "password": "pwsd", "surname": "tralal", "email": "test@test.ca", "name": "Bob"}'
+
+
+s = signup(email = 'fuck', name = 'shit', surname = 'tabarnak', image = 'connard', password = 'password')
+
+s = signup(email = 'test@test.ca', name = 'Bob', surname = 'tralal', image = 'aaa', password = 'pwsd')
+
+
+
+curl http://104.131.44.82:8000/signup/ -d '{"query":"signup","image": "aaa", "password": "pwsd", "surname": "fuckit", "email": "bob@test", "name": "Bob"}'
+
+
+
+curl http://104.131.44.82:8000/signup/ -d '{"query":"delete","image": "aaa", "password": "pwsd", "surname": "fuckit", "email": "bob@test", "name": "Bob"}'
+
+
+curl http://104.131.44.82:8000/signup/ -d '{"query":"select","image": "aaa", "password": "pwsd", "surname": "fuckit", "email": "bob@test", "name": "Bob"}'

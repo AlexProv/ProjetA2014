@@ -19,6 +19,5 @@ class ProfileMixin(object):
 class ProfileViewSet(ProfileMixin, viewsets.ModelViewSet):
     pass
 
-
 profile_router = DefaultRouter()
 profile_router.register(r'profile',ProfileViewSet)

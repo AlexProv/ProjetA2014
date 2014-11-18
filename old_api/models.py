@@ -5,7 +5,6 @@ class Profile(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=30, blank=True, default='')
     age = models.IntegerField()
-    #choices=['Brown', 'Blue', 'Green', 'Yellow', 'Purple'], default='Blue'
     eyesColor = models.CharField(max_length=30)
     hairColor = models.CharField(max_length=30)
 
