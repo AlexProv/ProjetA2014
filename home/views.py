@@ -7,4 +7,4 @@ from django.shortcuts import render_to_response
 def home(request):
 	#if request.method == 'GET':
     dicto = {'name':'allo','email':'fuck'}
-    return render_to_response("home/home.html",dicto)
+    return render_to_response("home/base.html",dicto)

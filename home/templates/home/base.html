@@ -1,60 +1,20 @@
 <html>
     <head> 
         <!--<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">-->
-        <link href="{{ STATIC_URL }}/css/bootstrap-theme-super-hero.css" rel="stylesheet" media="screen">
+        {% load static %}
+        <link href="{% static "assets/css/bootstrap-theme-super-hero.css" %}" rel="stylesheet" media="screen">
     </head>
 
     <body> 
     
     <!-- profile grid --> 
     <div class="container">
-
-        <div class="row">
-            <!-- profile sample --> 
-            <div class="col-md-4">
-                <h2> {{ name }} </h2>
-                 <!--<a href={{ linkToProfile }} class="thumbnail">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2000px-Star_Wars_Logo.svg.png" class="img-rounded" alt="Rounded Image">
-                </a> --> 
-                <div class="row">
-                    <div class="col-md-12"> 
-                       <p class="text-center"> {{ email }} </p>
-                    </div>
-                </div>
-            </div><!-- end profile sample --> 
-
-            <!-- profile sample --> 
-            <div class="col-md-4">
-                <h2> {{name }} </h2>
-                 <!--<a href={{ linkToProfile }} class="thumbnail">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2000px-Star_Wars_Logo.svg.png" class="img-rounded" alt="Rounded Image"> 
-                </a>--> 
-                <div class="row">
-                    <div class="col-md-12"> 
-                       <p class="text-center"> {{ email }} </p>
-                    </div>
-                </div>
-            </div><!-- end profile sample --> 
-
-            <!-- profile sample --> 
-            <div class="col-md-4">
-                <h2> {{ name }} </h2>
-                 <!--<a href={{ linkToProfile }} class="thumbnail">
-                    <img src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Star_Wars_Logo.svg/2000px-Star_Wars_Logo.svg.png" class="img-rounded" alt="Rounded Image"> 
-                </a>--> 
-                <div class="row">
-                    <div class="col-md-12"> 
-                       <p class="text-center"> {{ email }} </p>
-                    </div>
-                </div>
-            </div><!-- end profile sample --> 
-
-        </div>
-
+        {%  for i in [0:3]:
+                print i %}
     </div><!-- end profile grid --> 
 
 
     <script src="http://code.jquery.com/jquery.js"></script>
-    <script src="{{ STATIC_URL }}/js/bootstrap.min.js"></script>
+    <script src="{% static "assets/js/bootstrap.min.js" %}" rel="stylesheet" media="screen"/>
     </body>
 </html>

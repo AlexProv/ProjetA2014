@@ -77,7 +77,7 @@ WSGI_APPLICATION = 'SelfiLock.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'selfilockdb',
+        'NAME': 'projetdb',
         'USER': 'admin',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
