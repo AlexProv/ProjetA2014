@@ -19,9 +19,17 @@ class Achivement(models.Model):
     unlocked = models.CharField(max_length=5,default='False')
     description = models.CharField(max_length=400, blank=True, default='')
 
-class stats(models.Model):
+class Stats(models.Model):
     signup = models.ForeignKey(Signup)
     numbersOfWin = models.CharField(max_length=50, blank=True, default='')
     numbersOfFail = models.CharField(max_length=50, blank=True, default='')
     timesPlayed = models.CharField(max_length=50, blank=True, default='')
     achivementsUnlocked = models.CharField(max_length=50, blank=True, default='')
+
+class Locations(models.Model):
+    signup = models.ForeignKey(Signup)
+    lat = models.CharField(max_length=100, blank=True, default='')
+    lng = models.CharField(max_length=100, blank=True, default='')
+
+
+

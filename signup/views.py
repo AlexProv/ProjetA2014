@@ -5,10 +5,7 @@ from django.shortcuts import render
 from django.shortcuts import render_to_response
 
 from django.http import HttpResponse
-from signup.models import Signup
-from signup.models import AchivementsManager
-from signup.models import Achivement
-from signup.models import stats as Stats
+from signup.models import Signup,AchivementsManager,Achivement,Stats,Locations
 import json
 
 def api(request):
@@ -33,29 +30,33 @@ def api(request):
 
                 a = AchivementsManager(signup = s, name = email)
                 a.save()
-                a1 = Achivement(manager =a, name ='5Star', description = 'jouer 5 fois')
+                a1 = Achivement(manager =a, name ='5potato', description = 'jouer 5 fois')
                 a1.save()
-                a2 = Achivement(manager =a, name ='2Row', description = 'jouer 2 fois dans la meme journee')
+                a2 = Achivement(manager =a, name ='25potato', description = 'jouer 25 fois')
                 a2.save()
-                a3 = Achivement(manager =a, name ='Joueur', description = 'Joindre le monde de selfilock')
+                a3 = Achivement(manager =a, name ='50potato', description = 'jouer 50 fois')
                 a3.save()
                 #hack cree les achivements c'est pas inteligent live la. 
-
+                st = Stats(signup = s,numbersOfWin=0,numbersOfFail=0,timesPlayed=0,achivementsUnlocked=0)
+                st.save()
                 error = 'Could not save to the databse.'
                 return HttpResponse(request.body)
 
             elif result['query'] == 'deleteSignup':
-
                 email = result['email']
                 profile = Signup.objects.filter(email = email).delete()
+                return HttpResponse('deleted ' + email)
 
-                return HttpResponse('deleted' + email)
             elif result['query'] == 'selectSignup':
-
                 email = result['email']
                 profile = Signup.objects.filter(email = email).values()[0]
-
                 return HttpResponse(json.dumps(profile))
+
+            elif result['query'] == 'signupExist':
+                email = result['email']
+                s = list(Signup.objects.filter(email = email))  
+                print s  
+                return HttpResponse(str(s != []))
 
             elif result['query'] == 'updateAchivement':
                 email = result['email']
@@ -83,34 +84,45 @@ def api(request):
                 s.gender = gender
 
                 s.save()
-                return HttpResponse(json.dumps(s))
+                return HttpResponse('updated ' + email)
 
             elif result['query'] == 'updateStats':
                 email = result['email']
                 s = Signup.objects.filter(email = email)[0]
-                st = Stats.objects.filter(Signup = s)[0]
+                st = Stats.objects.filter(signup = s)[0]
                 st.numbersOfWin = result['numbersOfWin']
                 st.numbersOfFail = result['numbersOfFail']
                 st.timesPlayed = result['timesPlayed']
                 st.achivementsUnlocked = result['achivementsUnlocked']
                 st.save()
+                return HttpResponse('updated ' + email)
+
             elif result['query'] == 'getStats':
                 email = result['email']
                 s = Signup.objects.filter(email = email)[0]
-                st = Stats.objects.filter(Signup = s)[0]
-
-                stats = Stats.objects.filter(email = email).values()[0]
+                stats = Stats.objects.filter(signup = s).values()[0]
                 return HttpResponse(json.dumps(stats))
+
+            elif result['query'] == 'updateLocations':
+                email = result['email']
+                lat = result['lat']
+                lng = result['lng']
+                s = Signup.objects.filter(email = email)[0]
+                l = Locations(signup = s,lat=lat,lng=lng)
+                l.save()
+                return HttpResponse('added locations: ' lat + ' ' + lng)
+
             elif result['query'] == 'getAchivements':
                 email = result['email']
-                s = Signup.objects.filter(email = email)
-                am = AchivementsManager.objects.filter(signup = s)
+                s = Signup.objects.filter(email = email)[0]
+                am = AchivementsManager.objects.filter(signup = s)[0]
 
                 achivements = Achivement.objects.filter(manager=am).values()
                 answer = []
                 for o in achivements:
                     answer.append(json.dumps(o))
 
+                print json.dumps(answer)
                 return HttpResponse(json.dumps(answer))
 
         except Exception,e:
