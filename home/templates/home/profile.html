@@ -1,0 +1,77 @@
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>User Profile</title>
+
+    <!-- Bootstrap Core CSS - Uses Bootswatch Flatly Theme: http://bootswatch.com/flatly/ -->
+    <link href="{% static "assets/css/bootstrap.min.css"%}" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="{% static "assets/css/freelancer.css"%}" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="{% static "assets/font-awesome-4.1.0/css/font-awesome.min.css" %}" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="http://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+<style>
+    .row {
+        display: table;
+    }
+
+    [class*="col-"] {
+        float: none;
+        display: table-cell;
+        vertical-align: top;
+
+    }
+</style>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp"></script>
+<script>
+    google.maps.event.addDomListener(window, "load", function(){initialize("map-canvas",{{coords}});});
+</script>
+</head>
+<body>
+    <br/>
+    <div class="container-fluid well">
+    <div class="form-group col-xs-12">
+        <form action="/">
+            <button type="submit" class="btn btn-success btn-lg">Back to profiles</button>
+        </form>
+    </div>
+        <!--{  for name,email,gender,nbPlayed,nbWin,nbLose,nbAchiev in profiles } f( {{ params }} )-->
+        <div class="row">
+        	<div class="row-fluid col-md-6">
+                <div class="span2" >
+                    <img src="{% static imgpath %}" class="img-circle img-responsive">
+                </div>
+                <div class="span10">
+                    <h3>{{name}} </h3>
+                    <h6>Email: {{email}}</h6>
+                    <h6>Gender: {{gender}}</h6>
+                    <h6>Times Played: {{nbPlayed}}</h6>
+                    <h6>Number of Win: {{nbWin}}</h6>
+                    <h6>Number of Lose: {{nbLose}}</h6>
+                    <h6>Number of Achievements: {{nbAchiev}}</h6>
+                </div>
+            </div>
+            <div class="col-md-6" id="map-canvas"></div>
+        </div>
+    </div>
+
+    <!-- Map Management Javascript -->
+    <script src="{% static "assets/js/profileMapManagement.js"%}"></script>
+
+    <!-- jQuery -->
+    <script src="{% static "assets/js/jquery.js"%}"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="{% static "assets/js/bootstrap.min.js"%}"></script>
+
+</body>
+</html>

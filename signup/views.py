@@ -7,6 +7,9 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from signup.models import Signup,AchivementsManager,Achivement,Stats,Locations
 import json
+from django.core import serializers
+import base64
+
 
 def api(request):
     if request.method == 'GET':
@@ -18,14 +21,13 @@ def api(request):
         try:
             print result
             if result['query'] == 'createSignup':
-
                 name = result['name']
                 surname = result['surname']
                 image = result['image']
                 password = result['password']
                 email = result['email']
                 gender = result['gender']
-                s = Signup(email = email, name = name, surname = surname, image = image, password = password, gender = gender)
+                s = Signup(email = email, name = name, surname = surname, password = password, gender = gender)
                 s.save()
 
                 a = AchivementsManager(signup = s, name = email)
@@ -40,6 +42,12 @@ def api(request):
                 st = Stats(signup = s,numbersOfWin=0,numbersOfFail=0,timesPlayed=0,achivementsUnlocked=0)
                 st.save()
                 error = 'Could not save to the databse.'
+
+                path = '/root/projet1/static/img/profile/'
+                futureImg = open(path+email+'.png','wb')
+                imgData = base64.b64decode(image)
+                futureImg.write(imgData)
+
                 return HttpResponse(request.body)
 
             elif result['query'] == 'deleteSignup':
@@ -71,7 +79,6 @@ def api(request):
             elif result['query'] == 'updateProfile':
                 name = result['name']
                 surname = result['surname']
-                image = result['image']
                 password = result['password']
                 email = result['email']
                 gender = result['gender']
@@ -79,7 +86,6 @@ def api(request):
                 s = Signup.objects.filter(email = email)[0]
                 s.name = name
                 s.surname = surname
-                s.image = image
                 s.password = password
                 s.gender = gender
 
@@ -110,20 +116,30 @@ def api(request):
                 s = Signup.objects.filter(email = email)[0]
                 l = Locations(signup = s,lat=lat,lng=lng)
                 l.save()
-                return HttpResponse('added locations: ' lat + ' ' + lng)
+                return HttpResponse('added locations: ' + str(lat) + ' ' + str(lng))
+
+            elif result['query'] == 'getLocations':
+
+                email = result['email']
+                s = Signup.objects.filter(email = email)[0]
+                locations = Locations.objects.filter(signup = s)
+
+                googleData = []
+                for idx,loc in enumerate(locations):
+                    googleData.append(['',loc.lat,loc.lng,idx])
+
+                return HttpResponse(googleData)
 
             elif result['query'] == 'getAchivements':
+
                 email = result['email']
                 s = Signup.objects.filter(email = email)[0]
                 am = AchivementsManager.objects.filter(signup = s)[0]
 
-                achivements = Achivement.objects.filter(manager=am).values()
-                answer = []
-                for o in achivements:
-                    answer.append(json.dumps(o))
+                achivements = Achivement.objects.filter(manager=am)
+                data = serializers.serialize('json',achivements)
 
-                print json.dumps(answer)
-                return HttpResponse(json.dumps(answer))
+                return HttpResponse(data)
 
         except Exception,e:
                 print str(e)

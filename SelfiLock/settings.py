@@ -16,9 +16,8 @@ ROOT_PATH = os.path.dirname(__file__)
 
 
 STATIC_ROOT = os.path.join(ROOT_PATH, 'static')
-print STATIC_ROOT
 
-STATIC_URL = '/static/'
+STATIC_URL = '/root/projet1/static/'
 
 STATICFILES_DIRS = (
     ('assets', '/root/projet1/static'),
@@ -77,7 +76,7 @@ WSGI_APPLICATION = 'SelfiLock.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'finaldb',
+        'NAME': 'lastdb',
         'USER': 'admin',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
